@@ -1,88 +1,206 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Price List</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Shop | Alewar Madara • Yar Gulisuwa • Shadda • Attampa</title>
+  <meta name="description" content="Single‑page shop listing with prices in Nigerian Naira (₦)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-      color: #333;
+    :root{
+      --bg: #0f172a;           /* slate-900 */
+      --card: #111827;         /* gray-900 */
+      --muted: #94a3b8;        /* slate-400 */
+      --text: #e5e7eb;         /* gray-200 */
+      --accent: #22c55e;       /* green-500 */
+      --accent-2: #38bdf8;     /* sky-400 */
+      --ring: rgba(56,189,248,.35);
     }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 15px;
-      text-align: center;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(56,189,248,.15), transparent 60%),
+                  radial-gradient(1000px 500px at -10% 20%, rgba(34,197,94,.12), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
-    main {
-      max-width: 800px;
-      margin: 30px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    header{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(15,23,42,.6);
+      border-bottom: 1px solid rgba(148,163,184,.15);
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
+    .wrap{max-width:1100px;margin-inline:auto;padding:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow:0 10px 30px rgba(34,197,94,.25), 0 6px 18px rgba(56,189,248,.25);
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    h1{font-size:clamp(20px,3vw,28px);margin:0;font-weight:800;letter-spacing:.2px}
+    .muted{color:var(--muted);font-size:14px}
+    .toolbar{display:flex;align-items:center;gap:12px;margin-left:auto}
+    .search{
+      flex:1;min-width:220px;max-width:420px;height:40px;border-radius:12px;border:1px solid rgba(148,163,184,.25);
+      background:#0b1220;color:var(--text);padding:0 12px;outline:none;
     }
-    table, th, td {
-      border: 1px solid #ddd;
+    .cart{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;
+      background:#0b1220;border:1px solid rgba(148,163,184,.25);cursor:default
     }
-    th, td {
-      padding: 12px;
-      text-align: left;
+    main{padding:32px 16px}
+    .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:18px}
+    @media (min-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (min-width:980px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+    .card{
+      border:1px solid rgba(148,163,184,.15);border-radius:18px;overflow:hidden;background:var(--card);
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      display:flex;flex-direction:column;min-height:260px
     }
-    th {
-      background: #3498db;
-      color: white;
+    .thumb{height:120px;background:
+      linear-gradient(120deg, rgba(34,197,94,.25), rgba(56,189,248,.2)),
+      radial-gradient(circle at 30% 20%, rgba(56,189,248,.35), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(34,197,94,.35), transparent 40%),
+      #0b1220;
     }
-    tr:nth-child(even) {
-      background: #f9f9f9;
+    .card-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .title{font-weight:700;font-size:18px}
+    .unit{font-size:13px;color:var(--muted)}
+    .price{font-size:22px;font-weight:800}
+    .cta{
+      margin-top:auto;display:flex;gap:10px
     }
+    button{
+      appearance:none;border:none;padding:10px 12px;border-radius:12px;font-weight:600;cursor:pointer
+    }
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#061016;box-shadow:0 10px 24px var(--ring)}
+    .btn-ghost{background:transparent;border:1px solid rgba(148,163,184,.25);color:var(--text)}
+    footer{padding:24px 16px;color:var(--muted);border-top:1px solid rgba(148,163,184,.15)}
+    .blink{animation:blink 1.25s step-end infinite}
+    @keyframes blink{50%{opacity:.35}}
+    .hidden{display:none}
   </style>
 </head>
 <body>
   <header>
-    <h1>Product Price List</h1>
+    <div class="wrap" style="display:flex;align-items:center;gap:16px">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>ADUSTECH Mini Shop</h1>
+          <div class="muted blink">Display available very soon</div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <input id="search" class="search" type="search" placeholder="Search products… (e.g., Shadda)" />
+        <div class="cart" aria-live="polite" aria-atomic="true">🛒 <span id="cartCount">0</span></div>
+      </div>
+    </div>
   </header>
-  <main>
-    <h2>Available Products</h2>
-    <table>
-      <tr>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Unit</th>
-      </tr>
-      <tr>
-        <td>Alewar Madara</td>
-        <td>₦500</td>
-        <td>Per Pack</td>
-      </tr>
-      <tr>
-        <td>Gullisuwa</td>
-        <td>₦100</td>
-        <td>Per Pack</td>
-      </tr>
-      <tr>
-        <td>Shadda</td>
-        <td>₦4000</td>
-        <td>Per Yard</td>
-      </tr>
-      <tr>
-        <td>Atampa</td>
-        <td>₦2000</td>
-        <td>Per Tirmi</td>
-      </tr>
-    </table>
+
+  <main class="wrap">
+    <section aria-labelledby="products-heading">
+      <h2 id="products-heading" class="muted" style="margin:0 0 12px">Products & Pricing (₦)</h2>
+      <div id="grid" class="grid">
+        <!-- Alewar Madara -->
+        <article class="card" data-name="Alewar Madara">
+          <div class="thumb" role="img" aria-label="Abstract image for Alewar Madara"></div>
+          <div class="card-body">
+            <div class="title">Alewar Madara</div>
+            <div class="unit">Price per pack</div>
+            <div class="price" aria-label="Price">₦500</div>
+            <div class="cta">
+              <button class="btn-primary" data-add>Buy</button>
+              <button class="btn-ghost" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+        <!-- Yar Gulisuwa -->
+        <article class="card" data-name="Yar Gulisuwa">
+          <div class="thumb" role="img" aria-label="Abstract image for Yar Gulisuwa"></div>
+          <div class="card-body">
+            <div class="title">Yar Gulisuwa</div>
+            <div class="unit">Price per pack</div>
+            <div class="price" aria-label="Price">₦100</div>
+            <div class="cta">
+              <button class="btn-primary" data-add>Buy</button>
+              <button class="btn-ghost" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+        <!-- Shadda -->
+        <article class="card" data-name="Shadda">
+          <div class="thumb" role="img" aria-label="Abstract image for Shadda fabric"></div>
+          <div class="card-body">
+            <div class="title">Shadda</div>
+            <div class="unit">Price per yard</div>
+            <div class="price" aria-label="Price">₦4,000</div>
+            <div class="cta">
+              <button class="btn-primary" data-add>Buy</button>
+              <button class="btn-ghost" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+        <!-- Attampa -->
+        <article class="card" data-name="Attampa">
+          <div class="thumb" role="img" aria-label="Abstract image for Attampa fabric"></div>
+          <div class="card-body">
+            <div class="title">Attampa</div>
+            <div class="unit">Price per Tirmi</div>
+            <div class="price" aria-label="Price">₦2,000</div>
+            <div class="cta">
+              <button class="btn-primary" data-add>Buy</button>
+              <button class="btn-ghost" data-details>Details</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap">
+      © <span id="year"></span> Mini Shop • Prices are indicative. Contact sales to confirm availability.
+    </div>
+  </footer>
+
+  <script>
+    // Live year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple search/filter
+    const search = document.getElementById('search');
+    const grid = document.getElementById('grid');
+    const items = Array.from(grid.querySelectorAll('[data-name]'));
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      items.forEach(card => {
+        const match = card.dataset.name.toLowerCase().includes(q);
+        card.style.display = match ? '' : 'none';
+      });
+    });
+
+    // Cart counter + placeholder actions
+    let count = 0;
+    const cartCount = document.getElementById('cartCount');
+    grid.addEventListener('click', (e) => {
+      const add = e.target.closest('[data-add]');
+      const details = e.target.closest('[data-details]');
+      if (add){
+        count++; cartCount.textContent = count;
+        alert('Display available very soon');
+      }
+      if (details){
+        alert('Display available very soon');
+      }
+    });
+  </script>
 </body>
 </html>
